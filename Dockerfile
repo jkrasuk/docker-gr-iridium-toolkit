@@ -1,24 +1,11 @@
-FROM rust:1.77.0 AS builder
+FROM rust:1.83.0 AS builder
 WORKDIR /tmp/acars-bridge
 # hadolint ignore=DL3008,DL3003,SC1091
 RUN set -x && \
     apt-get update && \
     apt-get install -y --no-install-recommends libzmq3-dev
 
-RUN set -x && \
-    git clone https://github.com/sdr-enthusiasts/acars-bridge.git . && \
-    cargo build --release && \
-    # clean up the apt-cache
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    cp /tmp/acars-bridge/target/release/acars-bridge . && \
-    cargo clean
-
 FROM ghcr.io/sdr-enthusiasts/docker-baseimage:soapyrtlsdr
-
-ENV OUTPUT_SERVER="acarshub" \
-    OUTPUT_SERVER_PORT="5558" \
-    OUTPUT_SERVER_MODE="udp"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -97,7 +84,7 @@ RUN set -x && \
     popd && \
     ldconfig && \
     # install pip dependencies
-    pypy3 -m pip install --force-reinstall --break-system-packages crcmod zmq
+    pypy3 -m pip install --force-reinstall --break-system-packages crcmod zmq https://github.com/joh/when-changed/archive/master.zip
 
 COPY iridium-toolkit.patch /tmp/iridium-toolkit.patch
 
@@ -105,11 +92,11 @@ RUN set -x && \
     # install iridium-toolkit
     git clone https://github.com/muccc/iridium-toolkit.git /opt/iridium-toolkit && \
     pushd /opt/iridium-toolkit && \
+    git checkout libacars && \
     mv html/map.html html/index.html && \
     mkdir html2 && \
     mv html/mtmap.html html2/index.html && \
     rm html/example.sh && \
-    git apply /tmp/iridium-toolkit.patch && \
     popd && \
     # install gr-iridium
     git clone https://github.com/muccc/gr-iridium.git /src/gr-iridium && \
@@ -124,5 +111,4 @@ RUN set -x && \
     apt-get autoremove -y && \
     rm -rf /src/* /tmp/* /var/lib/apt/lists/*
 
-COPY --from=builder /tmp/acars-bridge/acars-bridge /opt/acars-bridge
 COPY rootfs /

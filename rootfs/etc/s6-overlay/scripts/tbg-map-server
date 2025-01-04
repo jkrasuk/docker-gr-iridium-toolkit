@@ -1,0 +1,13 @@
+#!/command/with-contenv bash
+#shellcheck shell=bash
+
+echo "Starting tbg-map-server"
+cd /opt/iridium-toolkit/html
+
+if [[ -n $LIVEMAP_TO_TBG ]]; then
+  echo "Sending sats.json to TBG"
+  when-changed ./sats.json cat ./sats.json | python3 /opt/thebaldgeek-send-sats.py > /dev/null
+else
+  sleep infinity
+  exit 0
+fi

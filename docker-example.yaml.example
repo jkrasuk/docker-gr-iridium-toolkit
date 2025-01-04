@@ -1,0 +1,31 @@
+services:
+  irdm:
+    container_name: irdm
+    hostname: irdm
+    image: ghcr.io/jkrasuk/docker-gr-iridium-toolkit
+#    build: docker-gr-iridium-toolkit
+    restart: always
+    tty: true # actually needed, for iridium-parser.py
+    ports:
+      - 8888:8888 # for beam map
+      - 8889:8889 # for mt map
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    volumes:
+      - /dev:/dev:rw
+      - ./irdm.conf:/opt/irdm.conf:ro
+      - ./thebaldgeek-send-sats.py:/opt/thebaldgeek-send-sats.py
+      - ./logs:/opt/logs
+    environment:
+      - ENABLE_BEAM_MAP=true
+#      - ENABLE_MTPOS_MAP=true
+#      - ENABLE_MTPOS_MAP_LOG=true
+#      - DISABLE_EXTRACTOR=true
+      - LOG_EXTRACTOR_STATS=true
+#      - LOG_MAP=true
+      - EXTRACTOR_ARGS= -D 4 --multi-frame # Valid values when running high sample rate are 1, 2, 4, 8 and 16
+      - STATION_ID=XX-YYYY-IRDM
+      - LIVEMAP_TO_TBG=true
+      - ACARS_ADDITIONAL_OUTPUTS=udp:acarshub:5558,udp:thebaldgeek.net:XXXX
+#      - LOG_ACARS=true
+#      - PARSER_ARGS= --harder --uw-ec --stats # remove --uw-ec then --harder if CPU usage is too high. --stats is required until an upstream bug is fixed
