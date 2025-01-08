@@ -5,7 +5,7 @@ if [[ -n $STATION_ID ]]; then
     REASSEMBLER_ACARS_EXTRA=" --station $STATION_ID"
     MODE_ACARS_LOG="/opt/logs/acars.log"
 
-    (pypy3 -u /opt/iridium-toolkit/reassembler.py -i zmq: -m acars ${REASSEMBLER_EXTRA} ${REASSEMBLER_ACARS_EXTRA}) > ${MODE_ACARS_LOG} &
+    (pypy3 -u /opt/iridium-toolkit/reassembler.py -i zmq: -m libacars ${REASSEMBLER_EXTRA} ${REASSEMBLER_ACARS_EXTRA}) > ${MODE_ACARS_LOG} &
 
     # Process: ZMQ --> Reassembler (ACARS) --> Remote
     ACARS_ADDITIONAL_OUTPUTS_CMD=""
@@ -18,7 +18,7 @@ if [[ -n $STATION_ID ]]; then
     done
     fi
 
-    (pypy3 -u /opt/iridium-toolkit/reassembler.py -i zmq: -m acars -a json ${REASSEMBLER_EXTRA} ${REASSEMBLER_ACARS_EXTRA}) | /opt/iridium-toolkit/iridium-acars-to-airframes.py -d $ACARS_ADDITIONAL_OUTPUTS_CMD
+    (pypy3 -u /opt/iridium-toolkit/reassembler.py -i zmq: -m libacars -a json ${REASSEMBLER_EXTRA} ${REASSEMBLER_ACARS_EXTRA}) | /opt/iridium-toolkit/iridium-acars-to-airframes.py -d $ACARS_ADDITIONAL_OUTPUTS_CMD
 else
     echo "No station ID"
     sleep infinity

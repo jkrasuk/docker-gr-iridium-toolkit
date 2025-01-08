@@ -4,13 +4,13 @@
 
 A Docker image to use the [gr-iridium](https://github.com/muccc/gr-iridium) and [iridium-toolkit](https://github.com/muccc/iridium-toolkit) software from the [Chaos Computer Club München](https://muc.ccc.de/) to parse ACARS messages on the Iridium network.
 
-It is possible to send ACARS and map data to [TBG](https://thebaldgeek.github.io) making the following steps:
-1. Set the `ACARS_ADDITIONAL_OUTPUTS` variable in `docker-compose.yaml` to include "udp:thebaldgeek.net:XXXX". Contact him to get a port.
-3. Set the `LIVEMAP_TO_TBG` variable to true
-2. Make a copy of `thebaldgeek-send-sats.py.example`, setup your neareast airport ICAO code in "uid" and specify the port where you will send the satellites beams data.
+It is possible to send ACARS and map data to [TBG](https://thebaldgeek.github.io) by performing the following steps:
+1. Set the `ACARS_ADDITIONAL_OUTPUTS` variable in `docker-compose.yaml` to include "udp:thebaldgeek.net:XXXX". Contact him to get the port number.
+3. Set the `LIVEMAP_TO_TBG` variable to true.
+2. Make a copy of `thebaldgeek-send-sats.py.example`, set the ICAO code of your nearby airport and specify the port to which you will send the satellite beam data.
 
 
-This was made using Kevin's [script](https://gist.github.com/kevinelliott/8bfbcc5555624082f743a7620322ee5c) to manage MUCCC Iridium Toolkit and Rajan's docker image to wrap it.
+This was made using Kevin's [script to manage MUCCC Iridium Toolkit](https://gist.github.com/kevinelliott/8bfbcc5555624082f743a7620322ee5c) and Rajan's docker image to wrap it.
 
 Under active development, everything is subject to change without notice.
 

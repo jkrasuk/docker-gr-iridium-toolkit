@@ -7,6 +7,8 @@ RUN set -x && \
 
 FROM ghcr.io/sdr-enthusiasts/docker-baseimage:soapyrtlsdr
 
+
+
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # hadolint ignore=DL3008,SC2086,DL4006,SC2039
@@ -90,9 +92,8 @@ COPY iridium-toolkit.patch /tmp/iridium-toolkit.patch
 
 RUN set -x && \
     # install iridium-toolkit
-    git clone https://github.com/muccc/iridium-toolkit.git /opt/iridium-toolkit && \
+    git clone https://github.com/jkrasuk/iridium-toolkit /opt/iridium-toolkit && \
     pushd /opt/iridium-toolkit && \
-    git checkout libacars && \
     mv html/map.html html/index.html && \
     mkdir html2 && \
     mv html/mtmap.html html2/index.html && \
@@ -106,6 +107,19 @@ RUN set -x && \
     cmake --install build && \
     ldconfig && \
     popd && \
+    # install libacars
+    git clone https://github.com/szpajder/libacars /src/libacars && \
+    pushd /src/libacars && \
+    git checkout unstable && \
+    mkdir build && \
+    pushd build && \
+    cmake .. && \
+    make    && \
+    make install   && \
+    popd && \
+    popd && \
+    ldconfig && \
+    cp /usr/local/lib/libacars-2.so /opt/iridium-toolkit/libacars-2.so && \
     # Clean up
     apt-get remove -y "${TEMP_PACKAGES[@]}" && \
     apt-get autoremove -y && \
