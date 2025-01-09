@@ -9,10 +9,3 @@ if [[ -n $LOG_MAP ]]; then
 else
     python3 -m http.server --bind 0.0.0.0 8888 &> /dev/null
 fi
-
-TBG_SEND_SATS_BIN="/opt/thebaldgeek-send-sats.py"
-
-if [[ -n $LIVEMAP_TO_TBG ]]; then
-    echo "Sending sats.json to TBG"
-    when-changed ./sats.json cat ./sats.json | python3 $TBG_SEND_STATS_BIN > /dev/null &
-fi

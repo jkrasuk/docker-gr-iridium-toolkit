@@ -86,7 +86,7 @@ RUN set -x && \
     popd && \
     ldconfig && \
     # install pip dependencies
-    pypy3 -m pip install --force-reinstall --break-system-packages crcmod zmq https://github.com/joh/when-changed/archive/master.zip
+    pypy3 -m pip install --force-reinstall --break-system-packages crcmod zmq
 
 COPY iridium-toolkit.patch /tmp/iridium-toolkit.patch
 
@@ -120,6 +120,8 @@ RUN set -x && \
     popd && \
     ldconfig && \
     cp /usr/local/lib/libacars-2.so /opt/iridium-toolkit/libacars-2.so && \
+    # install tbg-send-sats
+    git clone https://gist.github.com/efccc60079bf05391a9032dadf188c86.git /opt/tbg-send-sats && \
     # Clean up
     apt-get remove -y "${TEMP_PACKAGES[@]}" && \
     apt-get autoremove -y && \

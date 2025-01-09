@@ -6,8 +6,7 @@ A Docker image to use the [gr-iridium](https://github.com/muccc/gr-iridium) and 
 
 It is possible to send ACARS and map data to [TBG](https://thebaldgeek.github.io) by performing the following steps:
 1. Set the `ACARS_ADDITIONAL_OUTPUTS` variable in `docker-compose.yaml` to include "udp:thebaldgeek.net:XXXX". Contact him to get the port number.
-3. Set the `LIVEMAP_TO_TBG` variable to true.
-2. Make a copy of `thebaldgeek-send-sats.py.example`, set the ICAO code of your nearby airport and specify the port to which you will send the satellite beam data.
+2. Set the `LIVEMAP_TO_TBG` variable to true, set the ICAO code of your nearby airport `AIRPORT_ICAO_CODE` and specify the port to which you will send the satellite beam data `TBG_SATS_PORT`.
 
 
 This was made using Kevin's [script to manage MUCCC Iridium Toolkit](https://gist.github.com/kevinelliott/8bfbcc5555624082f743a7620322ee5c) and Rajan's docker image to wrap it.
@@ -35,7 +34,6 @@ services:
     volumes:
       - /dev:/dev:rw
       - ./irdm.conf:/opt/irdm.conf:ro
-      - ./thebaldgeek-send-sats.py:/opt/thebaldgeek-send-sats.py
       - ./logs:/opt/logs
     environment:
       - ENABLE_BEAM_MAP=true
@@ -47,7 +45,9 @@ services:
       - EXTRACTOR_ARGS= -D 4 --multi-frame # Valid values when running high sample rate are 1, 2, 4, 8 and 16
       - STATION_ID=XX-YYYY-IRDM
       - LIVEMAP_TO_TBG=true
-      - ACARS_ADDITIONAL_OUTPUTS=udp:acarshub:5558,udp:thebaldgeek.net:XXXX
+      - TBG_SATS_PORT=ZZZZ
+      - AIRPORT_ICAO_CODE=YYYY
+      - ACARS_ADDITIONAL_OUTPUTS=udp:acarshub:5558,udp:thebaldgeek.net:NNNN
 #      - LOG_ACARS=true
 #      - PARSER_ARGS= --harder --uw-ec --stats # remove --uw-ec then --harder if CPU usage is too high. --stats is required until an upstream bug is fixed
 

@@ -4,10 +4,13 @@
 echo "Starting tbg-map-server"
 cd /opt/iridium-toolkit/html
 
-if [[ -n $LIVEMAP_TO_TBG ]]; then
-  echo "Sending sats.json to TBG"
-  when-changed ./sats.json cat ./sats.json | python3 /opt/thebaldgeek-send-sats.py > /dev/null
+if [[ -n $LIVEMAP_TO_TBG && -n $AIRPORT_ICAO_CODE && -n $TBG_SATS_PORT ]]; then
+    while true; do
+        cat sats.json | python3 /opt/tbg-send-sats/thebaldgeek-send-sats.py >/dev/null &
+        echo "Sent sats"
+        sleep 30
+    done
 else
-  sleep infinity
-  exit 0
+    sleep infinity
+    exit 0
 fi
