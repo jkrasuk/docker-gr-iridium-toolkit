@@ -50,7 +50,11 @@ services:
       - ACARS_ADDITIONAL_OUTPUTS=udp:acarshub:5558,udp:thebaldgeek.net:NNNN
 #      - LOG_ACARS=true
 #      - PARSER_ARGS= --harder --uw-ec --stats # remove --uw-ec then --harder if CPU usage is too high. --stats is required until an upstream bug is fixed
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
 ```
 
 irdm.conf has details of your SDR device. Full details can be found [here](https://github.com/muccc/gr-iridium?tab=readme-ov-file#configuration-file). An example for using an RTL-SDR with max gain and bias-tee enabled:
