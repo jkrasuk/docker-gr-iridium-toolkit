@@ -39,7 +39,7 @@ RUN set -x && \
     ln -s /usr/bin/python3 /usr/bin/pypy3 && \
     pypy3 -m pip install --break-system-packages crcmod zmq pyproj && \
     # install iridium-toolkit
-    git clone https://github.com/jkrasuk/iridium-toolkit /opt/iridium-toolkit && \
+    git clone https://github.com/muccc/iridium-toolkit /opt/iridium-toolkit && \
     pushd /opt/iridium-toolkit && \
     mv html/map.html html/index.html && \
     mkdir html2 && \
