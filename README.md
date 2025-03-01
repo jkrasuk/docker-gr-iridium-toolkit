@@ -1,4 +1,4 @@
-# docker-gr-iridium-toolkit + TBG + libacars
+# docker-gr-iridium-toolkit + TBG
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/jkrasuk/docker-gr-iridium-toolkit/deploy.yml?branch=master)](https://github.com/rpatel3001/docker-gr-iridium-toolkit/actions/workflows/deploy.yml)
 [![Discord](https://img.shields.io/discord/734090820684349521)](https://discord.gg/sTf9uYF)
 

@@ -57,19 +57,6 @@ RUN set -x && \
     cmake --install build && \
     ldconfig && \
     popd && \
-    # install libacars
-    git clone https://github.com/szpajder/libacars /src/libacars && \
-    pushd /src/libacars && \
-    git checkout unstable && \
-    mkdir build && \
-    pushd build && \
-    cmake .. && \
-    make    && \
-    make install   && \
-    popd && \
-    popd && \
-    ldconfig && \
-    cp /usr/local/lib/libacars-2.so /opt/iridium-toolkit/libacars-2.so && \
     # install tbg-send-sats
     git clone https://gist.github.com/efccc60079bf05391a9032dadf188c86.git /opt/tbg-send-sats && \
     # Clean up
