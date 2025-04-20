@@ -37,7 +37,7 @@ RUN set -x && \
     "${TEMP_PACKAGES[@]}" && \
     # install pip dependencies
     ln -s /usr/bin/python3 /usr/bin/pypy3 && \
-    pypy3 -m pip install --break-system-packages crcmod zmq pyproj && \
+    pypy3 -m pip install --break-system-packages crcmod zmq pyproj https://github.com/joh/when-changed/archive/master.zip && \
     # install iridium-toolkit
     git clone https://github.com/muccc/iridium-toolkit /opt/iridium-toolkit && \
     pushd /opt/iridium-toolkit && \
@@ -60,7 +60,7 @@ RUN set -x && \
     ldconfig && \
     popd && \
     # install tbg-send-sats
-    git clone https://gist.github.com/efccc60079bf05391a9032dadf188c86.git /opt/tbg-send-sats && \
+    git clone https://gist.github.com/fcc366549ae04024353ee29284adf6a9.git /opt/tbg-send-sats && \
     # Clean up
     apt-get remove -y "${TEMP_PACKAGES[@]}" && \
     apt-get autoremove -y && \

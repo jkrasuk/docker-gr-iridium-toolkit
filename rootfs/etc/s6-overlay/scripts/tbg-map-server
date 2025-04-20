@@ -6,9 +6,7 @@ cd /opt/iridium-toolkit/html
 
 if [[ -n $LIVEMAP_TO_TBG && -n $AIRPORT_ICAO_CODE && -n $TBG_SATS_PORT ]]; then
     while true; do
-        cat sats.json | python3 /opt/tbg-send-sats/thebaldgeek-send-sats.py >/dev/null &
-        echo "Sent sats"
-        sleep 60
+        when-changed ./sats.json cat ./sats.json | python3 /opt/tbg-send-sats/thebaldgeek-send-sats-2.py
     done
 else
     sleep infinity
