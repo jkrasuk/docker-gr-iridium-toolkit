@@ -88,3 +88,17 @@ bandwidth=10000000
 # Linearity Gain
 gain=18
 ```
+
+---
+
+## How do I know if it is working?
+
+You can check the extractor statistics by running `docker logs irdm -f`
+
+![Image](https://github.com/user-attachments/assets/88794444-8896-4db0-8627-b4b251a55aca)
+
+Also, if you enabled the beam map, you should see a map with the satellite beams on [http://localhost:8888](http://localhost:8888/). 
+
+![Satellite Beam Map](https://i.imgur.com/qsjIVfP.png)
+
+The approximate location of the SBD and GSM terminals can be found on [http://localhost:8889](http://localhost:8889/).
