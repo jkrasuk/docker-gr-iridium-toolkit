@@ -5,11 +5,10 @@
 A Docker image to use the [gr-iridium](https://github.com/muccc/gr-iridium) and [iridium-toolkit](https://github.com/muccc/iridium-toolkit) software from the [Chaos Computer Club München](https://muc.ccc.de/) to parse ACARS messages on the Iridium network.
 
 It is possible to send ACARS and map data to [TBG](https://thebaldgeek.github.io) by performing the following steps:
-1. Set the `ACARS_ADDITIONAL_OUTPUTS` variable in `docker-compose.yaml` to include "udp:thebaldgeek.net:XXXX". Contact him to get the port number.
-2. Set the `LIVEMAP_TO_TBG` variable to true.
+1. Set the `STATION_ID` (used for ACARSHub and Airframes.io): The recommendation is to use the XX-YYYY-IRDM format, where XX is a two-digit representation of your initials or other personal id (mine is JK), YYYY is the nearest airport to you (mine is SADP) and IRDM means it is an Iridium feed.
+2. Set the `ACARS_ADDITIONAL_OUTPUTS` variable to include "udp:thebaldgeek.net:NNNN". Contact him to get the port number.
 3. Specify the port to which you will send the satellite beam data `TBG_SATS_PORT`.
 4. Set the ICAO code of your nearby airport `AIRPORT_ICAO_CODE`.
-
 
 This was made using Kevin's [script to manage MUCCC Iridium Toolkit](https://gist.github.com/kevinelliott/8bfbcc5555624082f743a7620322ee5c) and Rajan's docker image to wrap it.
 
