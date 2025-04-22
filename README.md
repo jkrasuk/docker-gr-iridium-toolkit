@@ -38,7 +38,7 @@ services:
       - ./logs:/opt/logs
     environment:
       - ENABLE_BEAM_MAP=true
-#      - ENABLE_MTPOS_MAP=true
+      - ENABLE_MTPOS_MAP=true
       - LOG_EXTRACTOR_STATS=true
       - EXTRACTOR_ARGS= -D 8 --multi-frame # Valid values when running high sample rate are 1, 2, 4, 8 and 16
       - STATION_ID=XX-YYYY-IRDM
@@ -54,7 +54,9 @@ services:
         max-file: "5"
 ```
 
-irdm.conf has details of your SDR device. Full details can be found [here](https://github.com/muccc/gr-iridium?tab=readme-ov-file#configuration-file). This file must be in the same folder where the yaml file is located. An example for using an RTL-SDR with max gain and bias-tee enabled:
+irdm.conf has details of your SDR device. Full details can be found [here](https://github.com/muccc/gr-iridium?tab=readme-ov-file#configuration-file). This file must be in the same folder where the yaml file is located. 
+
+An example for using an RTL-SDR with max gain and bias-tee enabled:
 
 ```
 [osmosdr-source]
@@ -69,4 +71,20 @@ bandwidth=0
 
 # LNA gain
 gain=49.6
+```
+
+Airspy R2 example:
+
+```
+[osmosdr-source]
+
+# Uncomment the following line to turn on the antenna bias
+device_args='airspy=0,bias=1,pack=1'
+
+sample_rate=10000000
+center_freq=1622000000
+bandwidth=10000000
+
+# Linearity Gain
+gain=18
 ```
