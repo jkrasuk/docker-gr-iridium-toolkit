@@ -21,7 +21,6 @@ RUN set -x && \
     TEMP_PACKAGES+=(cmake) && \
     TEMP_PACKAGES+=(git) && \
     TEMP_PACKAGES+=(libusb-1.0-0-dev) && \
-    TEMP_PACKAGES+=(gnuradio-dev) && \
     TEMP_PACKAGES+=(libsndfile1-dev) && \
     # keep
     KEPT_PACKAGES+=(python3) && \
@@ -31,6 +30,12 @@ RUN set -x && \
     KEPT_PACKAGES+=(gnuradio) && \
     KEPT_PACKAGES+=(gr-osmosdr) && \
     KEPT_PACKAGES+=(libsndfile1) && \
+    KEPT_PACKAGES+=(soapysdr-module-audio) && \
+    KEPT_PACKAGES+=(soapysdr-module-uhd ) && \
+    KEPT_PACKAGES+=(uhd-soapysdr) && \
+    KEPT_PACKAGES+=(libuhd-dev) && \
+    KEPT_PACKAGES+=(gnuradio-dev) && \
+    KEPT_PACKAGES+=(uhd-host) && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
     "${KEPT_PACKAGES[@]}" \
@@ -38,6 +43,26 @@ RUN set -x && \
     # install pip dependencies
     ln -s /usr/bin/python3 /usr/bin/pypy3 && \
     pypy3 -m pip install --break-system-packages crcmod zmq pyproj https://github.com/joh/when-changed/archive/master.zip && \
+    # install LimeSuite
+    git clone https://github.com/myriadrf/LimeSuite.git /src/LimeSuite && \
+    pushd /src/LimeSuite && \
+    git checkout stable && \
+    mkdir builddir && \
+    pushd builddir && \
+    cmake ../ && \
+    make -j4 && \
+    make install && \
+    ldconfig && \
+    popd && \
+    # install SoapyUHD
+    git clone https://github.com/pothosware/SoapyUHD.git /src/SoapyUHD && \
+    pushd /src/SoapyUHD && \
+    mkdir build && \
+    pushd build && \
+    cmake .. && \
+    make && \
+    make install && \
+    popd && \
     # install iridium-toolkit
     git clone https://github.com/muccc/iridium-toolkit /opt/iridium-toolkit && \
     pushd /opt/iridium-toolkit && \
