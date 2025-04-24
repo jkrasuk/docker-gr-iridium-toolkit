@@ -65,8 +65,8 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-size: "10m"
-        max-file: "5"
+        max-size: "10k"
+        max-file: "1"
 ```
 
 It is possible to send ACARS and map data to [TBG](https://thebaldgeek.github.io) by performing the following steps:
