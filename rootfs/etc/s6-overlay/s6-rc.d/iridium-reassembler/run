@@ -3,4 +3,4 @@
 
 echo "Starting reassembler"
 
-exec /etc/s6-overlay/scripts/iridium-reassembler
+exec timeout 28800 /etc/s6-overlay/scripts/iridium-reassembler
